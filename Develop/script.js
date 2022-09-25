@@ -17,47 +17,22 @@ THEN the saved events persist
  */
 
 // Variables
+var dateEl = $("#currentDay")
+
+dateEl.text(moment().format('dddd, MMMM Do, YYYY'))
+
 
 var saveBtn = $(".saveBtn")
 
-// fecha de hoy 
-$("#currentDay").text(moment().format('dddd MMMM Do YYYY'));
+saveBtn.click(function(event){
+    console.log(this);
+    var timeblock = $(".time-block");
+    var plan = $("textarea");
 
-// determina los colores de los blocks con respecto al tiempo
-function timeBlockColors() {
-    var hour = moment().hours();
+   console.log($(this).siblings("textarea").val());
 
-    $(".time-block").each(function(){
-        var currentHour = parseInt($(this).attr("id"));
+   localStorage.setItem(JSON.parse$(this).siblings("textarea").val())
 
-        if (currentHour>hour) {
-            $(this).addClass("future")
-        }else if (currentHour == hour){
-            $(this).addClass("present")
-        }else {
-            $(this).addClass("past")
-        }
-    })
-};
-// cuando hace click guarda el tiempo y plan
-saveBtn.on("click", function(){
-    var time = $(this).siblings(".hour").text();
-    var plan = $(this).siblings(".plan").val();
 
-    localStorage.setItem(time,plan);
+
 })
-
-function usePlanner(){
-    $(".hour").each(function(){
-        var presentHour = $(this).text();
-        var currentPlan = localStorage.getItem(presentHour)
-
-        if (currentPlan !== null){
-            $(this).siblings(".plan").val(currentPlan)
-        }
-
-    })
-}
-
-timeBlockColors();
-usePlanner();
